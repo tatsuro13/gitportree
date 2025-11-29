@@ -1,26 +1,18 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { WorktreeProvider } from './worktree/WorktreeProvider';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	const provider = new WorktreeProvider();
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "gitportree" is now active!');
+	vscode.window.registerTreeDataProvider('gitPortree.worktrees', provider);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('gitportree.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from gitportree!');
-	});
-
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(
+		vscode.commands.registerCommand('gitPortree.refresh', () => provider.refresh()),
+		vscode.commands.registerCommand('gitPortree.openWorktree', (item) => provider.open(item)),
+		vscode.commands.registerCommand('gitPortree.createWorktree', () => provider.create()),
+		vscode.commands.registerCommand('gitPortree.removeWorktree', (item) => provider.remove(item)),
+		vscode.commands.registerCommand('gitPortree.copyPortInfo', (item) => provider.copyPortInfo(item)),
+	);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
