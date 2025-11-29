@@ -1,0 +1,17 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="256" height="256" rx="32" fill="#1F335C"/>
+  
+  <!-- Tree -->
+  <path d="M128 40 L100 96 H116 L92 144 H112 L80 200 H176 L144 144 H164 L140 96 H156 Z"
+        fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linejoin="round"/>
+  
+  <!-- Plug -->
+  <path d="M116 200 V228 H140 V200" 
+        fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="112" cy="228" r="6" fill="#FFFFFF"/>
+  <circle cx="144" cy="228" r="6" fill="#FFFFFF"/>
+
+  <!-- Git Dot -->
+  <circle cx="196" cy="60" r="14" fill="#FFFFFF"/>
+</svg>
