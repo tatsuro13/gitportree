@@ -14,7 +14,7 @@
   "categories": [
     "Other"
   ],
-  "icon": "src/gitportree.svg",
+  "icon": "media/gitportree.png",
   "activationEvents": [
     "onView:gitPortree.worktrees",
     "onCommand:gitPortree.refresh",
@@ -103,12 +103,13 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run compile",
+    "vscode:prepublish": "pnpm run generate-icon && pnpm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "pnpm run compile && pnpm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "generate-icon": "node scripts/generate-icon.js"
   },
   "devDependencies": {
     "@types/vscode": "^1.106.1",
