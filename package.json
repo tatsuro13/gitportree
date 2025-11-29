@@ -3,19 +3,55 @@
   "displayName": "gitportree",
   "description": "Manage Git worktrees with auto ports & theme colors",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tatsuro13/gitportree"
+  },
+  "publisher": "tatsuro13",
   "engines": {
     "vscode": "^1.106.1"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onView:gitPortree.worktrees",
+    "onCommand:gitPortree.refresh",
+    "onCommand:gitPortree.createWorktree",
+    "onCommand:gitPortree.openWorktree",
+    "onCommand:gitPortree.removeWorktree",
+    "onCommand:gitPortree.copyPortInfo"
+  ],
   "main": "./out/extension.js",
   "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "id": "gitPortree.worktrees",
+          "name": "GitPortree"
+        }
+      ]
+    },
     "commands": [
       {
-        "command": "gitportree.helloWorld",
-        "title": "Hello World"
+        "command": "gitPortree.refresh",
+        "title": "Refresh GitPortree"
+      },
+      {
+        "command": "gitPortree.createWorktree",
+        "title": "Create Worktree"
+      },
+      {
+        "command": "gitPortree.openWorktree",
+        "title": "Open Worktree"
+      },
+      {
+        "command": "gitPortree.removeWorktree",
+        "title": "Remove Worktree"
+      },
+      {
+        "command": "gitPortree.copyPortInfo",
+        "title": "Copy Port Info"
       }
     ]
   },
