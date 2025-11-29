@@ -2,7 +2,7 @@
   "name": "gitportree",
   "displayName": "gitportree",
   "description": "Manage Git worktrees with auto ports & theme colors",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/tatsuro13/gitportree"
@@ -14,6 +14,7 @@
   "categories": [
     "Other"
   ],
+  "icon": "src/gitportree.svg",
   "activationEvents": [
     "onView:gitPortree.worktrees",
     "onCommand:gitPortree.refresh",
