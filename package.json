@@ -20,7 +20,8 @@
     "onCommand:gitPortree.createWorktree",
     "onCommand:gitPortree.openWorktree",
     "onCommand:gitPortree.removeWorktree",
-    "onCommand:gitPortree.copyPortInfo"
+    "onCommand:gitPortree.copyPortInfo",
+    "onCommand:gitPortree.changeWorktree"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -52,8 +53,53 @@
       {
         "command": "gitPortree.copyPortInfo",
         "title": "Copy Port Info"
+      },
+      {
+        "command": "gitPortree.changeWorktree",
+        "title": "Change Worktree"
       }
-    ]
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "gitPortree.refresh",
+          "when": "view == gitPortree.worktrees",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gitPortree.createWorktree",
+          "when": "view == gitPortree.worktrees",
+          "group": "navigation@2"
+        },
+        {
+          "command": "gitPortree.changeWorktree",
+          "when": "view == gitPortree.worktrees",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "gitPortree.changeWorktree",
+          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree",
+          "group": "inline@0"
+        },
+        {
+          "command": "gitPortree.openWorktree",
+          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree",
+          "group": "inline@1"
+        },
+        {
+          "command": "gitPortree.removeWorktree",
+          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree",
+          "group": "inline@2"
+        },
+        {
+          "command": "gitPortree.copyPortInfo",
+          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree",
+          "group": "inline@3"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",

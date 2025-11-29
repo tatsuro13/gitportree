@@ -10,8 +10,8 @@ export class ColorGenerator {
 	generate(branchName: string): GeneratedColor {
 		const theme = this.pickTheme(branchName);
 		const hue = this.randomHue(theme, branchName);
-		const saturation = 45;
-		const lightness = 38;
+		const saturation = 35;
+		const lightness = 25;
 
 		const hex = this.hslToHex(hue, saturation, lightness);
 		return {
@@ -30,9 +30,9 @@ export class ColorGenerator {
 	private randomHue(theme: ColorTheme, seed: string): number {
 		const hash = this.hash(seed);
 		const ranges: Record<ColorTheme, [number, number]> = {
-			blue: [200, 240],
-			green: [100, 150],
-			yellow: [40, 70],
+			blue: [210, 230],
+			green: [110, 135],
+			yellow: [45, 60],
 		};
 		const [min, max] = ranges[theme];
 		return min + (hash % (max - min));

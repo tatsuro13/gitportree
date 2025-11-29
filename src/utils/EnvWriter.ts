@@ -8,8 +8,10 @@ export interface EnvMap {
 export class EnvWriter {
 	constructor(private readonly root: string) {}
 
-	async write(relativePath: string, values: EnvMap): Promise<void> {
-		const target = path.join(this.root, relativePath);
+	async write(targetPath: string, values: EnvMap): Promise<void> {
+		const target = path.isAbsolute(targetPath)
+			? targetPath
+			: path.join(this.root, targetPath);
 		const content = Object.entries(values)
 			.map(([key, value]) => `${key}=${value}`)
 			.join('\n');

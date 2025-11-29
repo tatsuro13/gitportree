@@ -16,7 +16,7 @@ export class PortAllocator {
 		private readonly options: PortAllocatorOptions,
 	) {}
 
-	async assignPorts(worktreePath: string, offset: number): Promise<PortAssignment[]> {
+	async assignPorts(worktreePath: string, offset = 0): Promise<PortAssignment[]> {
 		const services = await this.detector.detect(worktreePath);
 		return services.map((service) => ({
 			service,

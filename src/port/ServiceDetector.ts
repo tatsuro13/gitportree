@@ -19,14 +19,19 @@ const SERVICE_PATTERNS: Record<ServiceType, RegExp> = {
 
 export class ServiceDetector {
 	async detect(worktreePath: string): Promise<ServiceInfo[]> {
-		const entries = await fs.readdir(worktreePath, { withFileTypes: true });
-		return entries
-			.filter((entry) => entry.isDirectory())
-			.map((entry) => ({
-				name: entry.name,
-				type: this.resolveType(entry.name),
-				location: path.join(worktreePath, entry.name),
-			}));
+		try {
+			const entries = await fs.readdir(worktreePath, { withFileTypes: true });
+			return entries
+				.filter((entry) => entry.isDirectory())
+				.map((entry) => ({
+					name: entry.name,
+					type: this.resolveType(entry.name),
+					location: path.join(worktreePath, entry.name),
+				}));
+		} catch (error) {
+			console.warn('[ServiceDetector] failed to scan', error);
+			return [];
+		}
 	}
 
 	private resolveType(name: string): ServiceType {
