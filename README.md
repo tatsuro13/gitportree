@@ -1,4 +1,3 @@
-# 🇯🇵 README（日本語版）
 # 🌲🔌 GitPortree  
 **Git Worktree を VSCode で“最も快適に使えるようにする”拡張機能。**
 
