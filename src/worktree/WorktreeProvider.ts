@@ -17,6 +17,15 @@ const DEFAULT_BASE_PORTS: Record<string, number> = {
 	unknown: 6000,
 };
 
+const RECENT_STORAGE_KEY = 'gitPortree.recentWorktrees';
+const RECENT_LIMIT = 3;
+
+interface RecentEntry {
+	path: string;
+	label: string;
+	branch?: string;
+}
+
 interface WorktreeProviderDeps {
 	rootPath: string;
 	git: GitCLI;
@@ -26,6 +35,7 @@ interface WorktreeProviderDeps {
 	colorGenerator: ColorGenerator;
 	themeUpdater: ThemeUpdater;
 	envWriter: EnvWriter;
+	memento: vscode.Memento;
 }
 
 export class WorktreeProvider
@@ -41,6 +51,7 @@ export class WorktreeProvider
 	private readonly colorGenerator: ColorGenerator;
 	private readonly themeUpdater: ThemeUpdater;
 	private readonly envWriter: EnvWriter;
+	private readonly memento?: vscode.Memento;
 	private readonly disposables: vscode.Disposable[] = [];
 	private readonly watchers: vscode.FileSystemWatcher[] = [];
 
@@ -63,6 +74,7 @@ export class WorktreeProvider
 				git: this.git,
 				portAllocator: this.portAllocator,
 			});
+		this.memento = deps.memento;
 		this.registerWatchers();
 	}
 
@@ -84,6 +96,7 @@ export class WorktreeProvider
 			await this.applyColor(item.node.branch);
 		}
 		await vscode.commands.executeCommand('vscode.openFolder', item.resourceUri, true);
+		this.trackRecent(item.node);
 	}
 
 	async create(): Promise<void> {
@@ -191,7 +204,19 @@ export class WorktreeProvider
 		}
 
 		const nodes: WorktreeNode[] = await this.scanner.scan();
-		return nodes.map((node) => new WorktreeItem(node));
+		const rootNodes: WorktreeNode[] = [];
+		const recentNodes = this.getRecentNodes(nodes);
+		if (recentNodes.length > 0) {
+			rootNodes.push({
+				label: 'Recent Worktrees',
+				description: 'Last opened worktrees',
+				path: this.rootPath,
+				children: recentNodes,
+				contextValue: 'gitPortree.section',
+			});
+		}
+		rootNodes.push(...nodes);
+		return rootNodes.map((node) => new WorktreeItem(node));
 	}
 
 	async changeWorktree(item?: WorktreeItem): Promise<void> {
@@ -274,5 +299,41 @@ export class WorktreeProvider
 		} catch (error) {
 			console.warn('[WorktreeProvider] failed to register worktree watcher', error);
 		}
+	}
+
+	private trackRecent(node: WorktreeNode): void {
+		if (!this.memento) {
+			return;
+		}
+		const entry: RecentEntry = {
+			path: path.resolve(node.path),
+			label: node.label,
+			branch: node.branch,
+		};
+		const current = this.memento.get<RecentEntry[]>(RECENT_STORAGE_KEY, []);
+		const next = [entry, ...current.filter((item) => item.path !== entry.path)];
+		this.memento.update(RECENT_STORAGE_KEY, next.slice(0, RECENT_LIMIT));
+	}
+
+	private getRecentNodes(allNodes: WorktreeNode[]): WorktreeNode[] {
+		if (!this.memento) {
+			return [];
+		}
+		const entries = this.memento.get<RecentEntry[]>(RECENT_STORAGE_KEY, []);
+		if (entries.length === 0) {
+			return [];
+		}
+		const map = new Map<string, WorktreeNode>();
+		allNodes.forEach((node) => {
+			map.set(path.resolve(node.path), node);
+		});
+		const recentNodes: WorktreeNode[] = [];
+		entries.forEach((entry) => {
+			const match = map.get(path.resolve(entry.path));
+			if (match) {
+				recentNodes.push(match);
+			}
+		});
+		return recentNodes;
 	}
 }

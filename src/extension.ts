@@ -7,7 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
 		return;
 	}
 
-	const provider = new WorktreeProvider();
+	const provider = new WorktreeProvider({ memento: context.globalState });
 	vscode.window.registerTreeDataProvider('gitPortree.worktrees', provider);
 
 	context.subscriptions.push(

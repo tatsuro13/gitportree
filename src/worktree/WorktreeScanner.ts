@@ -69,6 +69,7 @@ export class WorktreeScanner {
 					offset: index,
 					statusCount: changes,
 					daysSinceCreated: days,
+					createdAt,
 					contextValue: 'gitPortree.worktree',
 				});
 			}
@@ -162,8 +163,9 @@ export class WorktreeScanner {
 					continue;
 				}
 				const configPath = path.join(worktreesDir, entry.name, 'config');
+				let config: string;
 				try {
-					const config = await fs.readFile(configPath, 'utf8');
+					config = await fs.readFile(configPath, 'utf8');
 					const worktreeLine = config
 						.split(/\r?\n/)
 						.find((line) => line.trim().startsWith('worktree = '));
@@ -182,7 +184,10 @@ export class WorktreeScanner {
 						}
 					}
 				} catch (error) {
-					console.warn('[WorktreeScanner] failed to read worktree config', error);
+					const err = error as NodeJS.ErrnoException;
+					if (err?.code !== 'ENOENT') {
+						console.warn('[WorktreeScanner] failed to read worktree config', error);
+					}
 				}
 			}
 		} catch (error) {
