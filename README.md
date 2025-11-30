@@ -3,6 +3,8 @@
 
 GitPortree lets you manage every worktree visually in VSCode, automatically assigns ports per service inside a monorepo, and even switches theme colors per worktree so you always know where you are. その結果、複数ブランチの同時開発や Next.js / backend の並列起動が一気に整理され、Worktree ごとの使い分けが驚くほど快適になります。
 
+👉 [Install from the VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=tatsuro13.gitportree) / [VSCode Marketplace からインストール](https://marketplace.visualstudio.com/items?itemName=tatsuro13.gitportree)
+
 ---
 
 ## ✨ Features / 機能一覧
