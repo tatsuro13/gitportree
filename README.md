@@ -38,7 +38,7 @@ frontend → 3021 (+offset)
 backend → 4095 (+offset)
 admin → 5099 (+offset)
 ```
-Port allocation stays stable between sessions, so you can spin up frontend/backend/admin together without guessing. オフセットを変えるだけで無限に Worktree を増やせます。
+Each service reserves a 100-port “zone,” so offsets never push one service into another’s range (e.g., frontend 3000–3099, backend 4000–4099). Port allocation stays stable between sessions, so you can spin up frontend/backend/admin together without guessing. サービスごとに 100 ポート刻みでゾーンを区切っているため、offset を増やしても衝突せず、Worktree を無限に増やせます。
 
 ---
 
