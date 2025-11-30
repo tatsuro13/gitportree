@@ -7,6 +7,8 @@ export interface WorktreeNode {
 	services?: Array<{ name: string; port: number; type?: string; location?: string }>;
 	children?: WorktreeNode[];
 	branch?: string;
+	managed?: boolean;
+	baseBranch?: string;
 	offset?: number;
 	statusCount?: number;
 	daysSinceCreated?: number;
@@ -57,6 +59,9 @@ export class WorktreeItem extends vscode.TreeItem {
 		}
 		if (node.createdAt) {
 			lines.push(`Updated: ${new Date(node.createdAt).toLocaleString()}`);
+		}
+		if (node.baseBranch) {
+			lines.push(`Base: ${node.baseBranch}`);
 		}
 		lines.push(
 			`Status: ${node.statusCount && node.statusCount > 0 ? `dirty (${node.statusCount})` : 'clean'}`,

@@ -37,27 +37,38 @@
     "commands": [
       {
         "command": "gitPortree.refresh",
-        "title": "Refresh GitPortree"
+        "title": "Refresh GitPortree",
+        "icon": "$(refresh)"
       },
       {
         "command": "gitPortree.createWorktree",
-        "title": "Create Worktree"
+        "title": "Create Worktree",
+        "icon": "$(add)"
       },
       {
         "command": "gitPortree.openWorktree",
-        "title": "Open Worktree"
+        "title": "Open Worktree",
+        "icon": "$(folder-opened)"
       },
       {
         "command": "gitPortree.removeWorktree",
-        "title": "Remove Worktree"
+        "title": "Remove Worktree",
+        "icon": "$(trash)"
       },
       {
         "command": "gitPortree.copyPortInfo",
-        "title": "Copy Port Info"
+        "title": "Copy Port Info",
+        "icon": "$(copy)"
       },
       {
         "command": "gitPortree.changeWorktree",
-        "title": "Change Worktree"
+        "title": "Change Worktree",
+        "icon": "$(git-branch)"
+      },
+      {
+        "command": "gitPortree.deleteBranch",
+        "title": "Delete Worktree Branch",
+        "icon": "$(clear-all)"
       }
     ],
     "menus": {
@@ -81,23 +92,28 @@
       "view/item/context": [
         {
           "command": "gitPortree.changeWorktree",
-          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree",
-          "group": "inline@0"
+          "when": "view == gitPortree.worktrees && viewItem =~ /gitPortree\\.worktree/",
+          "group": "navigation@0"
         },
         {
           "command": "gitPortree.openWorktree",
-          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree",
+          "when": "view == gitPortree.worktrees && viewItem =~ /gitPortree\\.worktree/",
           "group": "inline@1"
         },
         {
           "command": "gitPortree.removeWorktree",
-          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree",
+          "when": "view == gitPortree.worktrees && viewItem =~ /gitPortree\\.worktree/",
           "group": "inline@2"
         },
         {
           "command": "gitPortree.copyPortInfo",
-          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree",
-          "group": "inline@3"
+          "when": "view == gitPortree.worktrees && viewItem =~ /gitPortree\\.worktree/",
+          "group": "navigation@1"
+        },
+        {
+          "command": "gitPortree.deleteBranch",
+          "when": "view == gitPortree.worktrees && viewItem == gitPortree.worktree.managed",
+          "group": "navigation@2"
         }
       ]
     }

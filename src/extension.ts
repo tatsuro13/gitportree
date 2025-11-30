@@ -18,6 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand('gitPortree.removeWorktree', (item) => provider.remove(item)),
 		vscode.commands.registerCommand('gitPortree.copyPortInfo', (item) => provider.copyPortInfo(item)),
 		vscode.commands.registerCommand('gitPortree.changeWorktree', (item) => provider.changeWorktree(item)),
+		vscode.commands.registerCommand('gitPortree.deleteBranch', (item) => provider.deleteBranch(item)),
 	);
 }
 

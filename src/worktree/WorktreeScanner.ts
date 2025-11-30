@@ -27,6 +27,8 @@ export class WorktreeScanner {
 		try {
 			const output = await this.deps.git.run(['worktree', 'list', '--porcelain']);
 			const worktrees = this.parseWorktreeList(output);
+			const { managed: managedBranches, bases: baseBranches } =
+				await this.deps.git.getBranchMetadata();
 			const nodes: WorktreeNode[] = [];
 
 			for (let index = 0; index < worktrees.length; index += 1) {
@@ -52,6 +54,9 @@ export class WorktreeScanner {
 					type: assignment.service.type,
 					location: assignment.service.location,
 				}));
+				const branchName = this.getBranchName(worktree);
+				const managed = branchName ? managedBranches.has(branchName) : false;
+				const baseBranch = branchName ? baseBranches.get(branchName) : undefined;
 				const children: WorktreeNode[] = services.map((service) => ({
 					label: service.name,
 					description: `${service.port}`,
@@ -65,12 +70,14 @@ export class WorktreeScanner {
 					path: worktree.path,
 					services,
 					children,
-					branch: this.getBranchName(worktree),
+					branch: branchName,
+					managed,
+					baseBranch,
 					offset: index,
 					statusCount: changes,
 					daysSinceCreated: days,
 					createdAt,
-					contextValue: 'gitPortree.worktree',
+					contextValue: managed ? 'gitPortree.worktree.managed' : 'gitPortree.worktree',
 				});
 			}
 
