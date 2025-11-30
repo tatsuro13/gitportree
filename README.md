@@ -1,63 +1,46 @@
-# 🌲🔌 GitPortree  
-**Git Worktree を VSCode で“最も快適に使えるようにする”拡張機能。**
+# 🌲🔌 GitPortree
+**The VSCode extension that makes Git Worktree management feel effortless. / Git Worktree を VSCode で“最も快適に使えるようにする”拡張機能。**
 
-GitPortree は、VSCode 上で Worktree を視覚的に管理し、  
-モノレポ内の複数サービスに対して **自動ポート割り当て** を行い、  
-さらに **Worktree ごとに VSCode のテーマカラーを自動切り替え** します。
-
-複数ブランチの同時開発、Next.js / backend の並列起動、  
-Worktree の使い分けが非常に快適になります。
+GitPortree lets you manage every worktree visually in VSCode, automatically assigns ports per service inside a monorepo, and even switches theme colors per worktree so you always know where you are. その結果、複数ブランチの同時開発や Next.js / backend の並列起動が一気に整理され、Worktree ごとの使い分けが驚くほど快適になります。
 
 ---
 
-## ✨ 機能一覧
+## ✨ Features / 機能一覧
 
-### 🌲 Worktree Explorer（サイドバー）
-- 全 Worktree を VSCode の TreeView で一覧表示  
-- ブランチ名 / パス / 経過日数 / 変更数を可視化  
-- サービスごとのポート割り当ても表示
+### 🌲 Worktree Explorer / ワークツリーエクスプローラー
+- View every worktree in a familiar TreeView with branch, path, age, and diff stats at a glance.
+- ブランチ名 / パス / 経過日数 / 変更数を可視化し、サービスごとのポート割り当ても同時に確認できます。
 
-### 🔌 自動ポート割り当て（衝突ゼロ）
-- フォルダ名からハッシュ生成 → ベースポート自動決定  
-- Worktree offset により安全にポートをずらす  
-- `.env.local` を自動生成＆更新  
-- lsof による衝突検知 → 再割り当て  
-- すべて“設定なし・完全自動”
+### 🔌 Auto Port Assignment / 自動ポート割り当て（衝突ゼロ）
+- Hash-based base ports + worktree offsets keep ports deterministic yet collision-free; `.env.local` files are created/updated automatically.
+- lsof ベースの衝突検知で安全に再割り当てし、すべて“設定なし・完全自動”で完結します。
 
-### 🎨 Worktree ごとの VSCode カラー自動変更
-- 開いた Worktree に応じて VSCode の UI 色が切り替わる  
-  （Dark Blue / Dark Green / Dark Yellow）  
-- 対象：
-  - Activity Bar  
-  - Status Bar  
-  - Title Bar  
-- 誤操作防止に効果絶大
+### 🎨 Automatic VSCode Colors / Worktree ごとのテーマ切替
+- Activity/Status/Title bars recolor themselves per worktree (Dark Blue / Dark Green / Dark Yellow) to avoid accidental edits.
+- 開いた Worktree に応じて VSCode の UI 色が切り替わり、誤操作を強力に防ぎます。
 
-### 🛠 便利機能
-- Worktree を開く  
-- Terminal / Finder で開く  
-- VSCode を Split で開く  
-- Worktree 削除  
-- ポート情報コピー  
+### 🛠 Utilities / 便利機能
+- Open worktrees in VSCode, terminals, Finder, or with split windows in a single click.
+- Worktree の削除やポート情報のコピーなど、日常作業を一括でこなすアクションを収録しています。
 
-### 📌 オプション
-- Hover 詳細  
-- Recent Worktrees  
-- Git 変更バッジ（●3 など）  
+### 📌 Options / オプション
+- Hover details, recent worktree shortcuts, and Git change badges (`●3` etc.) keep context at your fingertips.
+- Hover 詳細や Recent Worktrees、Git 変更バッジなどのオプションを用意しています。
 
 ---
 
-## 🧩 モノレポ完全対応
-複数サービスのポートを安全に割り当て：
+## 🧩 Monorepo Ready / モノレポ完全対応
+複数サービスのポートを安全に割り当てます：
 ```
 frontend → 3021 (+offset)
 backend → 4095 (+offset)
 admin → 5099 (+offset)
 ```
+Port allocation stays stable between sessions, so you can spin up frontend/backend/admin together without guessing. オフセットを変えるだけで無限に Worktree を増やせます。
 
 ---
 
-## 🚀 インストール方法（ローカル）
+## 🚀 Local Installation / インストール方法（ローカル）
 ```
 git clone https://github.com/tatsuro13/gitportree
 cd gitportree
@@ -65,42 +48,44 @@ npm install
 npm run build
 code --install-extension gitportree-0.0.1.vsix
 ```
+Use a newer `.vsix` file if you have one; VSCode picks up the latest build instantly. 新しい `.vsix` があればそちらを指定してください。
 
 ---
 
-## 🖥 UI プレビュー
-> Worktree Explorer / カラー切替 / ポート自動割り当ての GIF を挿入
+## 🖥 UI Preview / UI プレビュー
+> Insert GIFs for Worktree Explorer, color switching, and automatic port assignment. Worktree Explorer / カラー切替 / ポート自動割り当ての GIF を挿入。
 
 ---
 
-## ⚙ コマンド一覧
+## ⚙ Commands / コマンド一覧
 
-| コマンド | 概要 |
-|---------|------|
-| `GitPortree: Create Worktree` | 新しい Worktree を作成 |
-| `GitPortree: Open Worktree` | 選択した Worktree を開く |
-| `GitPortree: Remove Worktree` | 安全に Worktree を削除 |
-| `GitPortree: Copy Port Info` | ポート割り当て情報のコピー |
-| `GitPortree: Refresh` | 更新 |
+| Command | Description / 概要 |
+|---------|---------------------|
+| `GitPortree: Create Worktree` | Create a fresh worktree / 新しい Worktree を作成 |
+| `GitPortree: Open Worktree` | Open the selected worktree / 選択した Worktree を開く |
+| `GitPortree: Remove Worktree` | Safely delete a worktree / 安全に Worktree を削除 |
+| `GitPortree: Copy Port Info` | Copy assigned ports / ポート割り当て情報をコピー |
+| `GitPortree: Refresh` | Refresh all data / リフレッシュ |
 
 ---
 
-## 📁 ディレクトリ構成
+## 📁 Project Structure / ディレクトリ構成
 ```
 src/
-extension.ts
-worktree/
-port/
-color/
-utils/
+  extension.ts
+  worktree/
+  port/
+  color/
+  utils/
 ```
+Each folder stays focused: `worktree/` handles Git integration, `port/` resolves assignments, and `color/` tweaks VSCode themes. 役割ごとにディレクトリが分かれているので迷いません。
 
 ---
 
-## ⚖ ライセンス
+## ⚖ License / ライセンス
 MIT License
 
 ---
 
-## 👤 開発者
-制作：**tatsuro13**
+## 👤 Author / 開発者
+Created by **tatsuro13**. 気軽に Issue / PR をどうぞ。
